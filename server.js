@@ -36,22 +36,8 @@ app.use(express.json());
 // Auth middleware for pages
 app.use(authMiddleware);
 
-// Static files with proper MIME types - UPDATE THIS SECTION
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
-app.use('/js', express.static(path.join(__dirname, 'public/js')));
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
-
-// Add MIME type configuration
-app.use((req, res, next) => {
-    if (req.url.endsWith('.js')) {
-        res.type('application/javascript');
-    }
-    if (req.url.endsWith('.css')) {
-        res.type('text/css');
-    }
-    next();
-});
+// Remove all existing static and MIME configurations and replace with this:
+app.use(express.static('public'));
 
 // Views setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,7 +49,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/game', gameRoutes);
 app.use('/api/battle', battleRoutes);
 
-// Page Routes
+// Simple page routes
 app.get('/', (req, res) => res.render('index'));
 app.get('/dashboard', (req, res) => res.render('dashboard'));
 app.get('/game', (req, res) => res.render('game'));
