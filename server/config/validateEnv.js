@@ -1,12 +1,5 @@
 const validateEnv = () => {
-    const required = [
-        'MONGO_URL',
-        'MONGOUSER',
-        'MONGOPASSWORD',
-        'MONGOHOST',
-        'MONGOPORT',
-        'JWT_SECRET'
-    ];
+    const required = ['JWT_SECRET', 'MONGO_PUBLIC_URL'];
     
     for (const item of required) {
         if (!process.env[item]) {

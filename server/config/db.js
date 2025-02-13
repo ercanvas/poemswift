@@ -2,17 +2,17 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        const mongoUri = process.env.MONGO_URL;
+        // Use MONGO_PUBLIC_URL for external connections
+        const mongoUri = process.env.MONGO_PUBLIC_URL;
 
         if (!mongoUri) {
-            throw new Error('MONGO_URL is not defined');
+            throw new Error('MONGO_PUBLIC_URL is not defined');
         }
 
         const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 5000,
-            authSource: 'admin'
+            serverSelectionTimeoutMS: 5000
         };
 
         await mongoose.connect(mongoUri, options);
