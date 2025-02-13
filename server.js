@@ -36,8 +36,11 @@ app.use(express.json());
 // Auth middleware for pages
 app.use(authMiddleware);
 
-// Remove all existing static and MIME configurations and replace with this:
-app.use(express.static('public'));
+// Static and MIME configurations
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
+app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Views setup
 app.set('views', path.join(__dirname, 'views'));
