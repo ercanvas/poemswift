@@ -36,27 +36,31 @@ app.use(express.json());
 // Auth middleware for pages
 app.use(authMiddleware);
 
-// Static and MIME configurations
-app.use('/js', express.static(path.join(__dirname, 'public/js')));
-app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files
+app.use(express.static('public'));
+app.use(express.static('views'));
 
-// Views setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
-app.engine('html', require('ejs').renderFile);
+// Simple routes - serve HTML directly
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'dashboard.html'));
+});
+
+app.get('/game', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'game.html'));
+});
+
+app.get('/battle', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'battle.html'));
+});
 
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/game', gameRoutes);
 app.use('/api/battle', battleRoutes);
-
-// Simple page routes
-app.get('/', (req, res) => res.render('index'));
-app.get('/dashboard', (req, res) => res.render('dashboard'));
-app.get('/game', (req, res) => res.render('game'));
-app.get('/battle', (req, res) => res.render('battle'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
