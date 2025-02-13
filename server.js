@@ -25,15 +25,21 @@ new WebSocketServer(server);
 
 // Middleware
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-        ? 'https://poemswift.onrender.com' 
-        : 'http://localhost:5000',
+    origin: '*', // Allow all origins for now, change in production
     credentials: true
 }));
 app.use(express.json());
 
-// Static & Views
-app.use(express.static(path.join(__dirname, 'public')));
+// Static files with proper MIME types
+app.use('/styles', express.static(path.join(__dirname, 'public/styles'), {
+    setHeaders: (res) => res.setHeader('Content-Type', 'text/css')
+}));
+app.use('/js', express.static(path.join(__dirname, 'public/js'), {
+    setHeaders: (res) => res.setHeader('Content-Type', 'application/javascript')
+}));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
+// Views setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
@@ -49,10 +55,12 @@ app.get('/dashboard', (req, res) => res.render('dashboard'));
 app.get('/game', (req, res) => res.render('game'));
 app.get('/battle', (req, res) => res.render('battle'));
 
-// Error Handler
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    res.status(500).json({ 
+        error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message 
+    });
 });
 
 // Start Server

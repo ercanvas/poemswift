@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "npm install"
+    "build": "npm install",
+    "test": "echo \"No tests specified\" && exit 0",
+    "postinstall": "mkdir -p public/styles public/js public/images"
   },
   "engines": {
     "node": ">=18.0.0"

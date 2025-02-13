@@ -3,9 +3,10 @@ services:
     name: poemswift
     env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm install && npm run build
     startCommand: npm start
     autoDeploy: true
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
@@ -14,4 +15,8 @@ services:
       - key: MONGO_PUBLIC_URL
         value: mongodb://mongo:mjiEWicKFBeSAGQxViJaZqZnalWGrmSp@autorack.proxy.rlwy.net:12602
       - key: JWT_SECRET
-        sync: false
+        generateValue: true
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
