@@ -1,5 +1,5 @@
 const Battle = require('../models/Battle');
-const User = require('../models/User');
+const User = require('../server/models/User');
 
 const battles = new Map(); // Store active battles in memory
 

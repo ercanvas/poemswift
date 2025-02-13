@@ -13,6 +13,10 @@ class WebSocketServer {
         this.wss.on('connection', async (ws, req) => {
             console.log('New WebSocket connection');
 
+            // Add heartbeat
+            ws.isAlive = true;
+            ws.on('pong', () => { ws.isAlive = true; });
+
             // Authentication
             const token = req.url.split('token=')[1];
             if (!token) {
@@ -50,16 +54,18 @@ class WebSocketServer {
             });
         });
 
-        // Ping all clients every 30 seconds
-        setInterval(() => {
+        // Add ping interval
+        const interval = setInterval(() => {
             this.wss.clients.forEach(ws => {
-                if (ws.isAlive === false) {
-                    return ws.terminate();
-                }
+                if (ws.isAlive === false) return ws.terminate();
                 ws.isAlive = false;
                 ws.ping();
             });
         }, 30000);
+
+        this.wss.on('close', () => {
+            clearInterval(interval);
+        });
     }
 
     async handleMessage(ws, data) {
