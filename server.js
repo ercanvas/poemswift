@@ -36,14 +36,13 @@ app.use(express.json());
 // Auth middleware for pages
 app.use(authMiddleware);
 
-// Static files with proper MIME types
-app.use('/styles', express.static(path.join(__dirname, 'public/styles'), {
-    setHeaders: (res) => res.setHeader('Content-Type', 'text/css')
-}));
+// Static files with proper MIME types - UPDATE THIS SECTION
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/js', express.static(path.join(__dirname, 'public/js'), {
-    setHeaders: (res) => res.setHeader('Content-Type', 'application/javascript')
+    setHeaders: (res) => {
+        res.setHeader('Content-Type', 'application/javascript');
+    }
 }));
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 // Views setup
 app.set('views', path.join(__dirname, 'views'));

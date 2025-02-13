@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Login form handler
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
+    document.getElementById('login-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         try {
             const email = e.target.querySelector('[type="email"]').value;
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Register form handler
-    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         try {
             const username = e.target.querySelector('[placeholder="Kullanıcı Adı"]').value;
