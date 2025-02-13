@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoemSwift - Düello Modu</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="battle-page">
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="/dashboard" class="nav-link">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <img src="/images/pslogo.png" alt="PoemSwift" class="logo">
+        </div>
+        <div class="battle-info">
+            <span class="room-id">Oda: <span id="room-code">Bekleniyor...</span></span>
+        </div>
+    </nav>
+
+    <div id="waiting-screen" class="battle-waiting">
+        <h2>Rakip Bekleniyor</h2>
+        <div class="loading-spinner"></div>
+        <p>Oda Kodu: <span id="share-code"></span></p>
+        <button id="copy-code" class="modern-button">Kodu Kopyala</button>
+    </div>
+
+    <div id="battle-container" class="hidden">
+        <div class="battle-grid">
+            <div class="battle-scoreboard" id="battle-scoreboard">
+                <!-- Scores will be dynamically added here -->
+            </div>
+
+            <div class="battle-game">
+                <p id="battle-line" class="poem-line"></p>
+                <div id="battle-choices" class="choices-grid"></div>
+                <div class="battle-timer">
+                    <span id="battle-time">10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/battle.js"></script>
+</body>
+</html>

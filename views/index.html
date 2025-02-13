@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şiir Oyunu - Giriş</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <img src="/images/pslogo.png" alt="PoemSwift" class="logo floating">
+                <h1>PoemSwift</h1>
+                <p>Şiir dünyasına hoş geldiniz!</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">Giriş</button>
+                <button class="tab-btn" data-tab="signup">Kayıt</button>
+            </div>
+
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" placeholder="E-posta" required>
+                </div>
+                <div class="form-group">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" placeholder="Şifre" required>
+                </div>
+                <div class="form-options">
+                    <label>
+                        <input type="checkbox"> Beni hatırla
+                    </label>
+                    <a href="#" class="forgot-password">Şifremi unuttum</a>
+                </div>
+                <button type="submit" class="auth-button">Giriş Yap</button>
+            </form>
+
+            <form id="signup-form" class="auth-form hidden">
+                <div class="form-group">
+                    <i class="bi bi-person"></i>
+                    <input type="text" placeholder="Kullanıcı Adı" required>
+                </div>
+                <div class="form-group">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" placeholder="E-posta" required>
+                </div>
+                <div class="form-group">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" placeholder="Şifre" required>
+                </div>
+                <div class="form-group">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" placeholder="Şifre Tekrar" required>
+                </div>
+                <button type="submit" class="auth-button">Kayıt Ol</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script>
+        // Simple tab switching logic
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active tab button
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Show/hide appropriate form
+                const formId = button.getAttribute('data-tab') + '-form';
+                document.querySelectorAll('.auth-form').forEach(form => form.classList.add('hidden'));
+                document.getElementById(formId).classList.remove('hidden');
+            });
+        });
+
+        // Form submission handling (to be connected to server later)
+        document.querySelectorAll('.auth-form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Add server connection logic here
+                window.location.href = 'dashboard.html';
+            });
+        });
+    </script>
+</body>
+</html>
