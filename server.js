@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 const connectDB = require('./server/config/db');
 const WebSocketServer = require('./server/config/websocket');
 const validateEnv = require('./server/config/validateEnv');
+const cookieParser = require('cookie-parser');
+const authMiddleware = require('./server/middleware/authMiddleware');
 
 // Route imports
 const authRoutes = require('./server/routes/auth');
@@ -24,11 +26,15 @@ connectDB();
 new WebSocketServer(server);
 
 // Middleware
+app.use(cookieParser());
 app.use(cors({
     origin: '*', // Allow all origins for now, change in production
     credentials: true
 }));
 app.use(express.json());
+
+// Auth middleware for pages
+app.use(authMiddleware);
 
 // Static files with proper MIME types
 app.use('/styles', express.static(path.join(__dirname, 'public/styles'), {
