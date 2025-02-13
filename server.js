@@ -38,11 +38,20 @@ app.use(authMiddleware);
 
 // Static files with proper MIME types - UPDATE THIS SECTION
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/js', express.static(path.join(__dirname, 'public/js'), {
-    setHeaders: (res) => {
-        res.setHeader('Content-Type', 'application/javascript');
+app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
+// Add MIME type configuration
+app.use((req, res, next) => {
+    if (req.url.endsWith('.js')) {
+        res.type('application/javascript');
     }
-}));
+    if (req.url.endsWith('.css')) {
+        res.type('text/css');
+    }
+    next();
+});
 
 // Views setup
 app.set('views', path.join(__dirname, 'views'));
